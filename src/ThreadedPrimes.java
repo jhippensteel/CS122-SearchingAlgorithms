@@ -46,17 +46,22 @@ public class ThreadedPrimes {
 
     }
 
-    private static int binarySearch(long val, int[] primeList, int start, int end){
-        if (end <= start) return -1;
-        int halfway = (start + end) / 2;
-        if (primeList[halfway] == val) return halfway;
-        if(val > primeList[halfway]) {
-            return binarySearch(val, primeList, halfway, end);
+    private static int binarySearch (long val, int[] primeList, int start, int end){
+        try {
+            if (end <= start) return -1;
+            int halfway = (start + end) / 2;
+            if (primeList[halfway] == val) return halfway;
+            if (val > primeList[halfway]) {
+                return binarySearch(val, primeList, halfway, end);
+            }
+            if (val < primeList[halfway]) {
+                return binarySearch(val, primeList, start, halfway);
+            }
+            return 0;
         }
-        if(val < primeList[halfway]){
-            return binarySearch(val, primeList, start, halfway);
+        catch (StackOverflowError e){
+            return -1;
         }
-        return 0;
     }
 
 }
